@@ -3,7 +3,9 @@ import java.util.ResourceBundle;
 import javafx.fxml.Initializable;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -11,49 +13,60 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.Group;
 import javafx.scene.layout.Pane;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 
 public class MapGameController implements Initializable {
     public MapData mapData;
-    public MoveChara chara;
-    public GridPane mapGrid;
+    public MoveChara moveChara;
+    public GridPane mapGridPane;
     public ImageView[] mapImageViews;
 
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
+    public void initialize(URL url, ResourceBundle resourceBundle) {
         mapData = new MapData(21, 15);
-        chara = new MoveChara(1, 1, mapData);
+        moveChara = new MoveChara(1, 1, mapData);
         mapImageViews = new ImageView[mapData.getHeight() * mapData.getWidth()];
         for (int y = 0; y < mapData.getHeight(); y++) {
             for (int x = 0; x < mapData.getWidth(); x++) {
                 int index = y * mapData.getWidth() + x;
-                mapImageViews[index] = mapData.getImageView(x, y);
-            }
-        }
-        drawMap(chara, mapData);
-    }
-
-    // Draw the map
-    public void drawMap(MoveChara c, MapData m) {
-        int cx = c.getPosX();
-        int cy = c.getPosY();
-        mapGrid.getChildren().clear();
-        for (int y = 0; y < mapData.getHeight(); y++) {
-            for (int x = 0; x < mapData.getWidth(); x++) {
-                int index = y * mapData.getWidth() + x;
-                if (x == cx && y == cy) {
-                    mapGrid.add(c.getCharaImageView(), x, y);
-                } else {
-                    mapGrid.add(mapImageViews[index], x, y);
+                mapImageViews[index] = mapData.getMapImageView(x, y);
+                if (mapData.getItemType(x, y) != MapData.ITEM_TYPE_NULL) {
+                    mapImageViews[index] = mapData.getItemImageView(x, y);
                 }
             }
         }
+        drawMap(moveChara, mapData);
     }
 
-    // Get users key actions
-    public void keyAction(KeyEvent event) {
-        KeyCode key = event.getCode();
-        System.out.println("keycode:" + key);
-        switch (key) {
+    public void drawMap(MoveChara moveChara, MapData mapData) {
+        int moveCharaPositionX = moveChara.getPositionX();
+        int moveCharaPositionY = moveChara.getPositionY();
+        mapGridPane.getChildren().clear();
+        for (int y = 0; y < mapData.getHeight(); y++) {
+            for (int x = 0; x < mapData.getWidth(); x++) {
+                int index = y * mapData.getWidth() + x;
+                if (x == moveCharaPositionX && y == moveCharaPositionY) {
+                    mapGridPane.add(moveChara.getCharaImageView(), x, y);
+                } else {
+                    mapGridPane.add(mapImageViews[index], x, y);
+                }
+            }
+        }
+        if (moveChara.isGoal()) {
+            printAction("CLEAR");
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setHeaderText(null);
+            alert.setContentText("Clear!");
+            alert.showAndWait();
+            remapButtonAction();
+        }
+    }
+
+    public void keyAction(KeyEvent keyEvent) {
+        KeyCode keyCode = keyEvent.getCode();
+        System.out.println("keycode:" + keyCode);
+        switch (keyCode) {
             case H:
             case A:
                 leftButtonAction();
@@ -74,39 +87,37 @@ public class MapGameController implements Initializable {
             case BACK_SPACE:
                 remapButtonAction();
                 break;
+            default:
+                break;
         }
     }
 
-    // Operations for going the cat down
     public void upButtonAction() {
         printAction("UP");
-        chara.setCharaDirection(MoveChara.TYPE_UP);
-        chara.move(0, -1);
-        drawMap(chara, mapData);
+        moveChara.setCharaDirection(MoveChara.TYPE_UP);
+        moveChara.move(0, -1);
+        drawMap(moveChara, mapData);
     }
 
-    // Operations for going the cat down
     public void downButtonAction() {
         printAction("DOWN");
-        chara.setCharaDirection(MoveChara.TYPE_DOWN);
-        chara.move(0, 1);
-        drawMap(chara, mapData);
+        moveChara.setCharaDirection(MoveChara.TYPE_DOWN);
+        moveChara.move(0, 1);
+        drawMap(moveChara, mapData);
     }
 
-    // Operations for going the cat right
     public void leftButtonAction() {
         printAction("LEFT");
-        chara.setCharaDirection(MoveChara.TYPE_LEFT);
-        chara.move(-1, 0);
-        drawMap(chara, mapData);
+        moveChara.setCharaDirection(MoveChara.TYPE_LEFT);
+        moveChara.move(-1, 0);
+        drawMap(moveChara, mapData);
     }
 
-    // Operations for going the cat right
     public void rightButtonAction() {
         printAction("RIGHT");
-        chara.setCharaDirection(MoveChara.TYPE_RIGHT);
-        chara.move(1, 0);
-        drawMap(chara, mapData);
+        moveChara.setCharaDirection(MoveChara.TYPE_RIGHT);
+        moveChara.move(1, 0);
+        drawMap(moveChara, mapData);
     }
 
     public void remapButtonAction() {
@@ -115,7 +126,7 @@ public class MapGameController implements Initializable {
     }
 
     public void func1ButtonAction(ActionEvent event) {
-        System.out.println("func2: Nothing to do");
+        System.out.println("func1: Nothing to do");
     }
 
     public void func2ButtonAction(ActionEvent event) {
@@ -130,9 +141,7 @@ public class MapGameController implements Initializable {
         System.out.println("func4: Nothing to do");
     }
 
-    // Print actions of user inputs
     public void printAction(String actionString) {
         System.out.println("Action: " + actionString);
     }
-
 }

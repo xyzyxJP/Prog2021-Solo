@@ -20,7 +20,7 @@
 	<Button text="func4" prefWidth="100" onAction="#func4ButtonAction"/>
       </children>
     </HBox>
-    <GridPane fx:id="mapGrid" prefWidth="360" prefHeight="360" >
+    <GridPane fx:id="mapGridPane" prefWidth="360" prefHeight="360" >
     </GridPane>
 
   </children>
