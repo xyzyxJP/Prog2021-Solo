@@ -1,8 +1,5 @@
-import javafx.animation.Timeline;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-
-import java.time.Duration;
 import java.util.Date;
 
 public class MapData {
