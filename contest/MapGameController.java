@@ -9,9 +9,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.KeyCode;
 import java.util.ArrayList;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
-import java.io.File;
 
 public class MapGameController implements Initializable {
     public MapData mapData;
@@ -26,10 +23,6 @@ public class MapGameController implements Initializable {
         mapData = new MapData(21, 15);
         moveChara = new MoveChara(1, 1, mapData);
         DrawMap(moveChara, mapData);
-
-        Media media = new Media(new File("audio/main.mp3").toURI().toString());
-        MediaPlayer mplayer = new MediaPlayer(media);
-        mplayer.play();
     }
 
     public void DrawMap(MoveChara moveChara, MapData mapData) {
@@ -94,6 +87,9 @@ public class MapGameController implements Initializable {
             case L:
             case D:
                 RightButtonAction();
+                break;
+            case B:
+                BombButtonAction(null);
                 break;
             case DELETE:
             case BACK_SPACE:

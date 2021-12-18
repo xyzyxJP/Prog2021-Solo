@@ -15,11 +15,13 @@ public class MapData {
     public static final int ITEM_TYPE_BOMB = 1;
     public static final int ITEM_TYPE_KEY = 2;
     public static final int ITEM_TYPE_COIN = 3;
+    public static final int ITEM_TYPE_PORTAL = 4;
     private static final String itemImagePaths[] = {
             "image/GOAL.png",
             "image/BOMB.png",
             "image/KEY.png",
-            "image/COIN.png"
+            "image/COIN.png",
+            "image/PORTAL.png"
     };
 
     private Image[] mapImages;
