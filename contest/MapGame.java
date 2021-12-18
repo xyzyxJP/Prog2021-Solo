@@ -1,8 +1,8 @@
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import javafx.fxml.FXMLLoader;
 
 public class MapGame extends Application {
     Stage stage;
@@ -11,7 +11,7 @@ public class MapGame extends Application {
     public void start(Stage stage) throws Exception {
         this.stage = stage;
         stage.setTitle("MAP GAME");
-        Pane pane = (Pane) FXMLLoader.load(getClass().getResource("MapGame.fxml"));
+        Pane pane = (Pane) FXMLLoader.load(getClass().getResource("fxml/MapGame.fxml"));
         Scene scene = new Scene(pane);
         stage.setScene(scene);
         stage.show();

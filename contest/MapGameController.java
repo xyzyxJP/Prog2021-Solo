@@ -1,15 +1,15 @@
 import java.net.URL;
-import java.text.BreakIterator;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
-import javafx.fxml.Initializable;
+
 import javafx.event.ActionEvent;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
-import javafx.scene.layout.GridPane;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.KeyCode;
-import java.util.ArrayList;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.GridPane;
 
 public class MapGameController implements Initializable {
     public MapData mapData;

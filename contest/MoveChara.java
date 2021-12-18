@@ -1,9 +1,8 @@
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-
 import java.util.ArrayList;
 
 import javafx.animation.AnimationTimer;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 public class MoveChara {
     public static final int[][] VECTORS = { { -1, 0 }, { 1, 0 }, { 0, -1 }, { 0, 1 } };
