@@ -6,18 +6,20 @@ public class MapData {
     public static final int MAP_TYPE_WALL = 1;
     public static final int MAP_TYPE_OTHERS = 2;
     private static final String mapImagePaths[] = {
-            "png/SPACE.png",
-            "png/WALL.png"
+            "image/SPACE.png",
+            "image/WALL.png"
     };
 
     public static final int ITEM_TYPE_NULL = -1;
     public static final int ITEM_TYPE_GOAL = 0;
     public static final int ITEM_TYPE_BOMB = 1;
     public static final int ITEM_TYPE_KEY = 2;
+    public static final int ITEM_TYPE_COIN = 3;
     private static final String itemImagePaths[] = {
-            "png/GOAL.png",
-            "png/BOMB.png",
-            "png/KEY.png"
+            "image/GOAL.png",
+            "image/BOMB.png",
+            "image/KEY.png",
+            "image/COIN.png"
     };
 
     private Image[] mapImages;
@@ -50,6 +52,7 @@ public class MapData {
         SetItemType(x - 2, y - 2, ITEM_TYPE_GOAL);
         SetItemTypeRandom(3, ITEM_TYPE_BOMB);
         SetItemTypeRandom(1, ITEM_TYPE_KEY);
+        SetItemTypeRandom(3, ITEM_TYPE_COIN);
     }
 
     private void SetItemTypeRandom(int itemCount, int itemType) {

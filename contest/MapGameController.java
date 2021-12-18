@@ -4,22 +4,32 @@ import javafx.fxml.Initializable;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.KeyCode;
 import java.util.ArrayList;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import java.io.File;
 
 public class MapGameController implements Initializable {
     public MapData mapData;
     public MoveChara moveChara;
     public GridPane mapGridPane;
     public GridPane itemGridPane;
+    public Label scoreLabel;
+    public Label timeLabel;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         mapData = new MapData(21, 15);
         moveChara = new MoveChara(1, 1, mapData);
         DrawMap(moveChara, mapData);
+
+        Media media = new Media(new File("audio/main.mp3").toURI().toString());
+        MediaPlayer mplayer = new MediaPlayer(media);
+        mplayer.play();
     }
 
     public void DrawMap(MoveChara moveChara, MapData mapData) {
@@ -34,6 +44,7 @@ public class MapGameController implements Initializable {
                     alert.setHeaderText(null);
                     alert.setContentText("Clear!");
                     alert.showAndWait();
+                    moveChara.AddScore(1000);
                     RemapButtonAction();
                     return;
                 }
@@ -61,6 +72,7 @@ public class MapGameController implements Initializable {
         for (int i = 0; i < itemInventory.size(); i++) {
             itemGridPane.add(mapData.GetItemImageView(itemInventory.get(i)), i, 0);
         }
+        scoreLabel.setText(String.valueOf(moveChara.GetScore()));
     }
 
     public void KeyAction(KeyEvent keyEvent) {
@@ -87,6 +99,8 @@ public class MapGameController implements Initializable {
             case BACK_SPACE:
                 RemapButtonAction();
                 break;
+            case ESCAPE:
+                System.exit(0);
             default:
                 break;
         }

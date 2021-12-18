@@ -14,11 +14,13 @@ public class MoveChara {
 
     private final String[] directions = { "Up", "Down", "Left", "Right" };
     private final String[] animationNumbers = { "1", "2", "3" };
-    private final String imagePathCat = "png/cat";
+    private final String imagePathCat = "image/cat";
     private final String imagePathExt = ".png";
 
     private int positionX;
     private int positionY;
+
+    private static int score = 0;
 
     private ArrayList<Integer> itemInventory = new ArrayList<Integer>();
 
@@ -94,7 +96,12 @@ public class MoveChara {
     }
 
     public void AddItem(int itemType) {
-        itemInventory.add(itemType);
+        if (itemType == MapData.ITEM_TYPE_COIN) {
+            AddScore(200);
+        } else {
+            AddScore(50);
+            itemInventory.add(itemType);
+        }
     }
 
     public ArrayList<Integer> GetItemInventory() {
@@ -111,10 +118,19 @@ public class MoveChara {
                     itemInventory.remove(itemInventory.indexOf(itemType));
                     mapData.SetMapType(positionX + VECTORS[charaDirection][1],
                             positionY + VECTORS[charaDirection][0], MapData.MAP_TYPE_SPACE);
+                    AddScore(100);
                     return true;
                 }
         }
         return false;
+    }
+
+    public int GetScore() {
+        return score;
+    }
+
+    public void AddScore(int score) {
+        MoveChara.score += score;
     }
 
     private class ImageAnimation extends AnimationTimer {

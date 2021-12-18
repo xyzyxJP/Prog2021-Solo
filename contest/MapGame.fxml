@@ -10,7 +10,6 @@
   <padding>
     <Insets top="10" right="10" bottom="10" left="10"/>
   </padding>
-  
   <children>
     <HBox prefHeight="50">
       <children>
@@ -18,10 +17,18 @@
         <Button text="func2" prefWidth="100" onAction="#func2ButtonAction"/>
         <Button text="func3" prefWidth="100" onAction="#func3ButtonAction"/>
         <Button text="func4" prefWidth="100" onAction="#func4ButtonAction"/>
-        <GridPane fx:id="itemGridPane" prefWidth="200"></GridPane>
+        <GridPane fx:id="itemGridPane" prefWidth="200" />
       </children>
     </HBox>
-    <GridPane fx:id="mapGridPane" prefWidth="360" prefHeight="360" ></GridPane>
+    <HBox>
+      <children>
+        <Label text="Score = " />
+        <Label fx:id="scoreLabel" text="0" />
+        <Label text="   Time = " />
+        <Label fx:id="timeLabel" text="0" />
+      </children>
+    </HBox>
+    <GridPane fx:id="mapGridPane" prefWidth="360" prefHeight="360" />
 
   </children>
 </VBox>
