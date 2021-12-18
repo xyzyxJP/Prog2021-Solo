@@ -19,116 +19,116 @@ public class MapGameController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         mapData = new MapData(21, 15);
         moveChara = new MoveChara(1, 1, mapData);
-        drawMap(moveChara, mapData);
+        DrawMap(moveChara, mapData);
     }
 
-    public void drawMap(MoveChara moveChara, MapData mapData) {
-        int moveCharaPositionX = moveChara.getPositionX();
-        int moveCharaPositionY = moveChara.getPositionY();
-        int itemType = mapData.getItemType(moveCharaPositionX, moveCharaPositionY);
+    public void DrawMap(MoveChara moveChara, MapData mapData) {
+        int moveCharaPositionX = moveChara.GetPositionX();
+        int moveCharaPositionY = moveChara.GetPositionY();
+        int itemType = mapData.GetItemType(moveCharaPositionX, moveCharaPositionY);
         switch (itemType) {
             case MapData.ITEM_TYPE_GOAL:
-                if (moveChara.getItemInventory().contains(MapData.ITEM_TYPE_KEY)) {
+                if (moveChara.GetItemInventory().contains(MapData.ITEM_TYPE_KEY)) {
                     printAction("CLEAR");
                     Alert alert = new Alert(AlertType.INFORMATION);
                     alert.setHeaderText(null);
                     alert.setContentText("Clear!");
                     alert.showAndWait();
-                    remapButtonAction();
+                    RemapButtonAction();
                     return;
                 }
                 break;
             case default:
                 if (itemType != MapData.ITEM_TYPE_NULL) {
                     printAction("GET");
-                    moveChara.addItem(itemType);
-                    mapData.setItemType(moveCharaPositionX, moveCharaPositionY, MapData.ITEM_TYPE_NULL);
+                    moveChara.AddItem(itemType);
+                    mapData.SetItemType(moveCharaPositionX, moveCharaPositionY, MapData.ITEM_TYPE_NULL);
                 }
                 break;
         }
         mapGridPane.getChildren().clear();
-        for (int y = 0; y < mapData.getHeight(); y++) {
-            for (int x = 0; x < mapData.getWidth(); x++) {
+        for (int y = 0; y < mapData.GetHeight(); y++) {
+            for (int x = 0; x < mapData.GetWidth(); x++) {
                 if (x == moveCharaPositionX && y == moveCharaPositionY) {
-                    mapGridPane.add(moveChara.getCharaImageView(), x, y);
+                    mapGridPane.add(moveChara.GetCharaImageView(), x, y);
                 } else {
-                    mapGridPane.add(mapData.getMapItemImageView(x, y), x, y);
+                    mapGridPane.add(mapData.GetMapItemImageView(x, y), x, y);
                 }
             }
         }
         itemGridPane.getChildren().clear();
-        ArrayList<Integer> itemInventory = moveChara.getItemInventory();
+        ArrayList<Integer> itemInventory = moveChara.GetItemInventory();
         for (int i = 0; i < itemInventory.size(); i++) {
-            itemGridPane.add(mapData.getItemImageView(itemInventory.get(i)), i, 0);
+            itemGridPane.add(mapData.GetItemImageView(itemInventory.get(i)), i, 0);
         }
     }
 
-    public void keyAction(KeyEvent keyEvent) {
+    public void KeyAction(KeyEvent keyEvent) {
         KeyCode keyCode = keyEvent.getCode();
         System.out.println("KeyCode:" + keyCode);
         switch (keyCode) {
             case H:
             case A:
-                leftButtonAction();
+                LeftButtonAction();
                 break;
             case J:
             case S:
-                downButtonAction();
+                DownButtonAction();
                 break;
             case K:
             case W:
-                upButtonAction();
+                UpButtonAction();
                 break;
             case L:
             case D:
-                rightButtonAction();
+                RightButtonAction();
                 break;
             case DELETE:
             case BACK_SPACE:
-                remapButtonAction();
+                RemapButtonAction();
                 break;
             default:
                 break;
         }
     }
 
-    public void upButtonAction() {
+    public void UpButtonAction() {
         printAction("UP");
-        moveChara.setCharaDirection(MoveChara.TYPE_UP);
-        moveChara.move(MoveChara.TYPE_UP);
-        drawMap(moveChara, mapData);
+        moveChara.SetCharaDirection(MoveChara.TYPE_UP);
+        moveChara.Move(MoveChara.TYPE_UP);
+        DrawMap(moveChara, mapData);
     }
 
-    public void downButtonAction() {
+    public void DownButtonAction() {
         printAction("DOWN");
-        moveChara.setCharaDirection(MoveChara.TYPE_DOWN);
-        moveChara.move(MoveChara.TYPE_DOWN);
-        drawMap(moveChara, mapData);
+        moveChara.SetCharaDirection(MoveChara.TYPE_DOWN);
+        moveChara.Move(MoveChara.TYPE_DOWN);
+        DrawMap(moveChara, mapData);
     }
 
-    public void leftButtonAction() {
+    public void LeftButtonAction() {
         printAction("LEFT");
-        moveChara.setCharaDirection(MoveChara.TYPE_LEFT);
-        moveChara.move(MoveChara.TYPE_LEFT);
-        drawMap(moveChara, mapData);
+        moveChara.SetCharaDirection(MoveChara.TYPE_LEFT);
+        moveChara.Move(MoveChara.TYPE_LEFT);
+        DrawMap(moveChara, mapData);
     }
 
-    public void rightButtonAction() {
+    public void RightButtonAction() {
         printAction("RIGHT");
-        moveChara.setCharaDirection(MoveChara.TYPE_RIGHT);
-        moveChara.move(MoveChara.TYPE_RIGHT);
-        drawMap(moveChara, mapData);
+        moveChara.SetCharaDirection(MoveChara.TYPE_RIGHT);
+        moveChara.Move(MoveChara.TYPE_RIGHT);
+        DrawMap(moveChara, mapData);
     }
 
-    public void remapButtonAction() {
+    public void RemapButtonAction() {
         printAction("REMAP");
         initialize(null, null);
     }
 
-    public void bombButtonAction(ActionEvent event) {
+    public void BombButtonAction(ActionEvent event) {
         printAction("BOMB");
-        moveChara.useItem(MapData.ITEM_TYPE_BOMB);
-        drawMap(moveChara, mapData);
+        moveChara.UseItem(MapData.ITEM_TYPE_BOMB);
+        DrawMap(moveChara, mapData);
     }
 
     public void func2ButtonAction(ActionEvent event) {

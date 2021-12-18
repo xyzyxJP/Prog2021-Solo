@@ -49,10 +49,10 @@ public class MoveChara {
         positionX = startX;
         positionY = startY;
 
-        setCharaDirection(TYPE_RIGHT);
+        SetCharaDirection(TYPE_RIGHT);
     }
 
-    public void setCharaDirection(int charaDirection) {
+    public void SetCharaDirection(int charaDirection) {
         this.charaDirection = charaDirection;
         for (int i = 0; i < 4; i++) {
             if (i == charaDirection) {
@@ -63,16 +63,16 @@ public class MoveChara {
         }
     }
 
-    public boolean canMove(int charaDirection) {
-        if (mapData.getMapType(positionX + VECTORS[charaDirection][1],
+    public boolean CanMove(int charaDirection) {
+        if (mapData.GetMapType(positionX + VECTORS[charaDirection][1],
                 positionY + VECTORS[charaDirection][0]) == MapData.MAP_TYPE_SPACE) {
             return true;
         }
         return false;
     }
 
-    public boolean move(int charaDirection) {
-        if (canMove(charaDirection)) {
+    public boolean Move(int charaDirection) {
+        if (CanMove(charaDirection)) {
             positionX += VECTORS[charaDirection][1];
             positionY += VECTORS[charaDirection][0];
             return true;
@@ -81,35 +81,35 @@ public class MoveChara {
         }
     }
 
-    public ImageView getCharaImageView() {
+    public ImageView GetCharaImageView() {
         return charaImageViews[charaDirection];
     }
 
-    public int getPositionX() {
+    public int GetPositionX() {
         return positionX;
     }
 
-    public int getPositionY() {
+    public int GetPositionY() {
         return positionY;
     }
 
-    public void addItem(int itemType) {
+    public void AddItem(int itemType) {
         itemInventory.add(itemType);
     }
 
-    public ArrayList<Integer> getItemInventory() {
+    public ArrayList<Integer> GetItemInventory() {
         return itemInventory;
     }
 
-    public boolean useItem(int itemType) {
+    public boolean UseItem(int itemType) {
         if (!itemInventory.contains(itemType)) {
             return false;
         }
         switch (itemType) {
             case MapData.ITEM_TYPE_BOMB:
-                if (!canMove(charaDirection)) {
+                if (!CanMove(charaDirection)) {
                     itemInventory.remove(itemInventory.indexOf(itemType));
-                    mapData.setMapType(positionX + VECTORS[charaDirection][1],
+                    mapData.SetMapType(positionX + VECTORS[charaDirection][1],
                             positionY + VECTORS[charaDirection][0], MapData.MAP_TYPE_SPACE);
                     return true;
                 }
