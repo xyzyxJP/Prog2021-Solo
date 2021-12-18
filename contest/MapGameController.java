@@ -29,12 +29,15 @@ public class MapGameController implements Initializable {
         mapData = new MapData(21, 15);
         moveChara = new MoveChara(1, 1, mapData);
         DrawMap(moveChara, mapData);
+        if (timer != null) {
+            timer.cancel();
+        }
         timer = new Timer();
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
                 Platform.runLater(() -> {
-                    long remainingTime = MapData.TIME_LIMIT - mapData.GetPlaySeconds();
+                    long remainingTime = mapData.GetRemainingTime();
                     timeLabel.setText(String.valueOf(remainingTime));
                     if (remainingTime <= 0) {
                         timer.cancel();
@@ -51,18 +54,6 @@ public class MapGameController implements Initializable {
         int moveCharaPositionY = moveChara.GetPositionY();
         int itemType = mapData.GetItemType(moveCharaPositionX, moveCharaPositionY);
         switch (itemType) {
-            case MapData.ITEM_TYPE_GOAL:
-                if (moveChara.GetItemInventory().contains(MapData.ITEM_TYPE_KEY)) {
-                    printAction("CLEAR");
-                    Alert alert = new Alert(AlertType.INFORMATION);
-                    alert.setHeaderText(null);
-                    alert.setContentText("Clear!");
-                    alert.showAndWait();
-                    moveChara.AddScore(1000);
-                    RemapButtonAction();
-                    return;
-                }
-                break;
             case MapData.ITEM_TYPE_PORTAL:
                 printAction("PORTAL");
                 moveChara.Portal();
@@ -75,6 +66,7 @@ public class MapGameController implements Initializable {
                 }
                 break;
         }
+
         moveCharaPositionX = moveChara.GetPositionX();
         moveCharaPositionY = moveChara.GetPositionY();
         mapGridPane.getChildren().clear();
@@ -93,6 +85,18 @@ public class MapGameController implements Initializable {
             itemGridPane.add(mapData.GetItemImageView(itemInventory.get(i)), i, 0);
         }
         scoreLabel.setText(String.valueOf(moveChara.GetScore()));
+
+        if (itemType == MapData.ITEM_TYPE_GOAL) {
+            if (moveChara.GetItemInventory().contains(MapData.ITEM_TYPE_KEY)) {
+                printAction("CLEAR");
+                Alert alert = new Alert(AlertType.INFORMATION);
+                alert.setHeaderText(null);
+                alert.setContentText("Clear!");
+                alert.showAndWait();
+                moveChara.AddScore(1000);
+                RemapButtonAction();
+            }
+        }
     }
 
     public void KeyAction(KeyEvent keyEvent) {

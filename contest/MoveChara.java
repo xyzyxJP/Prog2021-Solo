@@ -107,11 +107,18 @@ public class MoveChara {
     }
 
     public void AddItem(int itemType) {
-        if (itemType == MapData.ITEM_TYPE_COIN) {
-            AddScore(200);
-        } else {
-            AddScore(50);
-            itemInventory.add(itemType);
+        switch (itemType) {
+            case MapData.ITEM_TYPE_COIN:
+                AddScore(200);
+                break;
+            case MapData.ITEM_TYPE_TIME:
+                AddScore(50);
+                mapData.AddTimeOffset(MapData.TIME_PLUS);
+                break;
+            default:
+                AddScore(50);
+                itemInventory.add(itemType);
+                break;
         }
     }
 

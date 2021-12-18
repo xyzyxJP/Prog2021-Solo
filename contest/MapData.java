@@ -16,16 +16,19 @@ public class MapData {
     public static final int ITEM_TYPE_KEY = 2;
     public static final int ITEM_TYPE_COIN = 3;
     public static final int ITEM_TYPE_PORTAL = 4;
+    public static final int ITEM_TYPE_TIME = 5;
     private static final String itemImagePaths[] = {
             "image/goal.png",
             "image/bomb.png",
             "image/key.png",
             "image/coin.png",
-            "image/portal.png"
+            "image/portal.png",
+            "image/time.png"
     };
 
     public static final long RESET_TIME_LIMIT = 35;
     public static long TIME_LIMIT = 35;
+    public static long TIME_PLUS = 10;
 
     private Image[] mapImages;
     private Image[] itemImages;
@@ -35,6 +38,7 @@ public class MapData {
     private int height;
 
     private Date startDate;
+    private long timeOffset;
 
     MapData(int x, int y) {
         width = x;
@@ -61,10 +65,11 @@ public class MapData {
         SetItemTypeRandom(1, ITEM_TYPE_KEY);
         SetItemTypeRandom(3, ITEM_TYPE_COIN);
         SetItemTypeRandom(2, ITEM_TYPE_PORTAL);
+        SetItemTypeRandom(3, ITEM_TYPE_TIME);
 
         TIME_LIMIT -= 5;
-
         startDate = new Date();
+        timeOffset = 0;
     }
 
     private void SetItemTypeRandom(int itemCount, int itemType) {
@@ -88,12 +93,16 @@ public class MapData {
         return width;
     }
 
-    public long GetPlaySeconds() {
-        return ((new Date().getTime()) - startDate.getTime()) / 1000;
+    public long GetRemainingTime() {
+        return MapData.TIME_LIMIT - (((new Date().getTime()) - startDate.getTime()) / 1000) + timeOffset;
     }
 
     public void ResetTimeLimit() {
         TIME_LIMIT = RESET_TIME_LIMIT;
+    }
+
+    public void AddTimeOffset(long offset) {
+        timeOffset += offset;
     }
 
     public boolean CheckXY(int x, int y) {
