@@ -5,7 +5,6 @@ import java.util.Date;
 public class MapData {
     public static final int MAP_TYPE_SPACE = 0;
     public static final int MAP_TYPE_WALL = 1;
-    public static final int MAP_TYPE_OTHERS = 2;
     private static final String mapImagePaths[] = {
             "image/space.png",
             "image/wall.png"
