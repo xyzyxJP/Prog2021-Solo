@@ -55,6 +55,7 @@ public class MapData {
         SetItemTypeRandom(3, ITEM_TYPE_BOMB);
         SetItemTypeRandom(1, ITEM_TYPE_KEY);
         SetItemTypeRandom(3, ITEM_TYPE_COIN);
+        SetItemTypeRandom(2, ITEM_TYPE_PORTAL);
     }
 
     private void SetItemTypeRandom(int itemCount, int itemType) {

@@ -1,4 +1,5 @@
 import java.net.URL;
+import java.text.BreakIterator;
 import java.util.ResourceBundle;
 import javafx.fxml.Initializable;
 import javafx.event.ActionEvent;
@@ -42,6 +43,10 @@ public class MapGameController implements Initializable {
                     return;
                 }
                 break;
+            case MapData.ITEM_TYPE_PORTAL:
+                printAction("PORTAL");
+                moveChara.Portal();
+                break;
             case default:
                 if (itemType != MapData.ITEM_TYPE_NULL) {
                     printAction("GET");
@@ -50,6 +55,8 @@ public class MapGameController implements Initializable {
                 }
                 break;
         }
+        moveCharaPositionX = moveChara.GetPositionX();
+        moveCharaPositionY = moveChara.GetPositionY();
         mapGridPane.getChildren().clear();
         for (int y = 0; y < mapData.GetHeight(); y++) {
             for (int x = 0; x < mapData.GetWidth(); x++) {
@@ -91,6 +98,7 @@ public class MapGameController implements Initializable {
             case B:
                 BombButtonAction(null);
                 break;
+            case R:
             case DELETE:
             case BACK_SPACE:
                 RemapButtonAction();

@@ -83,6 +83,20 @@ public class MoveChara {
         }
     }
 
+    public void Portal() {
+        System.out.println(positionX + ", " + positionY);
+        for (int x = 0; x < mapData.GetWidth(); x++) {
+            for (int y = 0; y < mapData.GetHeight(); y++) {
+                if (!(x == positionX && y == positionY) && mapData.GetItemType(x, y) == MapData.ITEM_TYPE_PORTAL) {
+                    System.out.println(x + ", " + y);
+                    positionX = x;
+                    positionY = y;
+                    return;
+                }
+            }
+        }
+    }
+
     public ImageView GetCharaImageView() {
         return charaImageViews[charaDirection];
     }
