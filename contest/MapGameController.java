@@ -125,7 +125,7 @@ public class MapGameController implements Initializable {
         initialize(null, null);
     }
 
-    public void bombButtonAction(ActionEvent event) {
+    public void BombButtonAction(ActionEvent event) {
         printAction("BOMB");
         moveChara.UseItem(MapData.ITEM_TYPE_BOMB);
         DrawMap(moveChara, mapData);

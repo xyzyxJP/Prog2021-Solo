@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.input.* ?>
 
-<VBox fx:controller="MapGameController" xmlns:fx="http://javafx.com/fxml" xmlns="http://javafx.com/javafx/11" onKeyPressed="#keyAction">
+<VBox fx:controller="MapGameController" xmlns:fx="http://javafx.com/fxml" xmlns="http://javafx.com/javafx/11" onKeyPressed="#KeyAction">
   <padding>
     <Insets top="10" right="10" bottom="10" left="10"/>
   </padding>
@@ -14,7 +14,7 @@
   <children>
     <HBox prefHeight="50">
       <children>
-        <Button text="Bomb" prefWidth="100" onAction="#bombButtonAction"/>
+        <Button text="Bomb" prefWidth="100" onAction="#BombButtonAction"/>
         <Button text="func2" prefWidth="100" onAction="#func2ButtonAction"/>
         <Button text="func3" prefWidth="100" onAction="#func3ButtonAction"/>
         <Button text="func4" prefWidth="100" onAction="#func4ButtonAction"/>
