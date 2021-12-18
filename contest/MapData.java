@@ -6,8 +6,8 @@ public class MapData {
     public static final int MAP_TYPE_WALL = 1;
     public static final int MAP_TYPE_OTHERS = 2;
     private static final String mapImagePaths[] = {
-            "image/SPACE.png",
-            "image/WALL.png"
+            "image/space.png",
+            "image/wall.png"
     };
 
     public static final int ITEM_TYPE_NULL = -1;
@@ -17,11 +17,11 @@ public class MapData {
     public static final int ITEM_TYPE_COIN = 3;
     public static final int ITEM_TYPE_PORTAL = 4;
     private static final String itemImagePaths[] = {
-            "image/GOAL.png",
-            "image/BOMB.png",
-            "image/KEY.png",
-            "image/COIN.png",
-            "image/PORTAL.png"
+            "image/goal.png",
+            "image/bomb.png",
+            "image/key.png",
+            "image/coin.png",
+            "image/portal.png"
     };
 
     private Image[] mapImages;

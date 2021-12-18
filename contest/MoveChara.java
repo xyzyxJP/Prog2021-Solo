@@ -12,9 +12,9 @@ public class MoveChara {
     public static final int TYPE_LEFT = 2;
     public static final int TYPE_RIGHT = 3;
 
-    private final String[] directions = { "Up", "Down", "Left", "Right" };
+    private final String[] directions = { "up", "down", "left", "right" };
     private final String[] animationNumbers = { "1", "2", "3" };
-    private final String imagePathCat = "image/cat";
+    private final String imagePathCat = "image/cat/";
     private final String imagePathExt = ".png";
 
     private int positionX;
@@ -84,11 +84,9 @@ public class MoveChara {
     }
 
     public void Portal() {
-        System.out.println(positionX + ", " + positionY);
         for (int x = 0; x < mapData.GetWidth(); x++) {
             for (int y = 0; y < mapData.GetHeight(); y++) {
                 if (!(x == positionX && y == positionY) && mapData.GetItemType(x, y) == MapData.ITEM_TYPE_PORTAL) {
-                    System.out.println(x + ", " + y);
                     positionX = x;
                     positionY = y;
                     return;
