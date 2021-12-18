@@ -1,6 +1,5 @@
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.shape.Rectangle;
 
 import java.util.ArrayList;
 
@@ -65,7 +64,6 @@ public class MoveChara {
     }
 
     public boolean canMove(int charaDirection) {
-        System.out.println(charaDirection);
         if (mapData.getMapType(positionX + VECTORS[charaDirection][1],
                 positionY + VECTORS[charaDirection][0]) == MapData.MAP_TYPE_SPACE) {
             return true;
@@ -104,7 +102,6 @@ public class MoveChara {
     }
 
     public boolean useItem(int itemType) {
-        System.out.println(charaDirection);
         if (!itemInventory.contains(itemType)) {
             return false;
         }

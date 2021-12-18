@@ -2,19 +2,11 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.Initializable;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.KeyCode;
-import javafx.scene.Group;
-import javafx.scene.layout.Pane;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import java.util.ArrayList;
 
 public class MapGameController implements Initializable {
@@ -73,7 +65,7 @@ public class MapGameController implements Initializable {
 
     public void keyAction(KeyEvent keyEvent) {
         KeyCode keyCode = keyEvent.getCode();
-        System.out.println("keycode:" + keyCode);
+        System.out.println("KeyCode:" + keyCode);
         switch (keyCode) {
             case H:
             case A:
