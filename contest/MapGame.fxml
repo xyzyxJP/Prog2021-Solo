@@ -14,7 +14,7 @@
   <children>
     <HBox prefHeight="50">
       <children>
-        <Button text="func1" prefWidth="100" onAction="#func1ButtonAction"/>
+        <Button text="Bomb" prefWidth="100" onAction="#bombButtonAction"/>
         <Button text="func2" prefWidth="100" onAction="#func2ButtonAction"/>
         <Button text="func3" prefWidth="100" onAction="#func3ButtonAction"/>
         <Button text="func4" prefWidth="100" onAction="#func4ButtonAction"/>

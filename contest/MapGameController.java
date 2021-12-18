@@ -36,12 +36,15 @@ public class MapGameController implements Initializable {
         int itemType = mapData.getItemType(moveCharaPositionX, moveCharaPositionY);
         switch (itemType) {
             case MapData.ITEM_TYPE_GOAL:
-                printAction("CLEAR");
-                Alert alert = new Alert(AlertType.INFORMATION);
-                alert.setHeaderText(null);
-                alert.setContentText("Clear!");
-                alert.showAndWait();
-                remapButtonAction();
+                if (moveChara.getItemInventory().contains(MapData.ITEM_TYPE_KEY)) {
+                    printAction("CLEAR");
+                    Alert alert = new Alert(AlertType.INFORMATION);
+                    alert.setHeaderText(null);
+                    alert.setContentText("Clear!");
+                    alert.showAndWait();
+                    remapButtonAction();
+                    return;
+                }
                 break;
             case default:
                 if (itemType != MapData.ITEM_TYPE_NULL) {
@@ -51,14 +54,13 @@ public class MapGameController implements Initializable {
                 }
                 break;
         }
-        mapData.setMapImageViews();
         mapGridPane.getChildren().clear();
         for (int y = 0; y < mapData.getHeight(); y++) {
             for (int x = 0; x < mapData.getWidth(); x++) {
                 if (x == moveCharaPositionX && y == moveCharaPositionY) {
                     mapGridPane.add(moveChara.getCharaImageView(), x, y);
                 } else {
-                    mapGridPane.add(mapData.getMapImageView(x, y), x, y);
+                    mapGridPane.add(mapData.getMapItemImageView(x, y), x, y);
                 }
             }
         }
@@ -101,28 +103,28 @@ public class MapGameController implements Initializable {
     public void upButtonAction() {
         printAction("UP");
         moveChara.setCharaDirection(MoveChara.TYPE_UP);
-        moveChara.move(0, -1);
+        moveChara.move(MoveChara.TYPE_UP);
         drawMap(moveChara, mapData);
     }
 
     public void downButtonAction() {
         printAction("DOWN");
         moveChara.setCharaDirection(MoveChara.TYPE_DOWN);
-        moveChara.move(0, 1);
+        moveChara.move(MoveChara.TYPE_DOWN);
         drawMap(moveChara, mapData);
     }
 
     public void leftButtonAction() {
         printAction("LEFT");
         moveChara.setCharaDirection(MoveChara.TYPE_LEFT);
-        moveChara.move(-1, 0);
+        moveChara.move(MoveChara.TYPE_LEFT);
         drawMap(moveChara, mapData);
     }
 
     public void rightButtonAction() {
         printAction("RIGHT");
         moveChara.setCharaDirection(MoveChara.TYPE_RIGHT);
-        moveChara.move(1, 0);
+        moveChara.move(MoveChara.TYPE_RIGHT);
         drawMap(moveChara, mapData);
     }
 
@@ -131,8 +133,10 @@ public class MapGameController implements Initializable {
         initialize(null, null);
     }
 
-    public void func1ButtonAction(ActionEvent event) {
-        System.out.println("func1: Nothing to do");
+    public void bombButtonAction(ActionEvent event) {
+        printAction("BOMB");
+        moveChara.useItem(MapData.ITEM_TYPE_BOMB);
+        drawMap(moveChara, mapData);
     }
 
     public void func2ButtonAction(ActionEvent event) {

@@ -13,15 +13,16 @@ public class MapData {
     public static final int ITEM_TYPE_NULL = -1;
     public static final int ITEM_TYPE_GOAL = 0;
     public static final int ITEM_TYPE_BOMB = 1;
+    public static final int ITEM_TYPE_KEY = 2;
     private static final String itemImagePaths[] = {
             "png/GOAL.png",
-            "png/BOMB.png"
+            "png/BOMB.png",
+            "png/KEY.png"
     };
 
     private Image[] mapImages;
-    private ImageView[][] mapImageViews;
-    private int[][] mapTypes;
     private Image[] itemImages;
+    private int[][] mapTypes;
     private int[][] itemTypes;
     private int width;
     private int height;
@@ -31,7 +32,6 @@ public class MapData {
         height = y;
 
         mapImages = new Image[mapImagePaths.length];
-        mapImageViews = new ImageView[y][x];
         for (int i = 0; i < mapImagePaths.length; i++) {
             mapImages[i] = new Image(mapImagePaths[i]);
         }
@@ -48,9 +48,21 @@ public class MapData {
 
         fillItemType(ITEM_TYPE_NULL);
         setItemType(x - 2, y - 2, ITEM_TYPE_GOAL);
-        setItemType(2, 1, ITEM_TYPE_BOMB);
+        SetItemTypeRandom(3, ITEM_TYPE_BOMB);
+        SetItemTypeRandom(1, ITEM_TYPE_KEY);
+    }
 
-        setMapImageViews();
+    private void SetItemTypeRandom(int itemCount, int itemType) {
+        for (int i = 0; i < itemCount; i++) {
+            int tempX = (int) (Math.random() * width);
+            int tempY = (int) (Math.random() * height);
+            if (getMapType(tempX, tempY) == MAP_TYPE_SPACE && getItemType(tempX, tempY) == ITEM_TYPE_NULL
+                    && !(tempX == 1 && tempY == 1)) {
+                setItemType(tempX, tempY, itemType);
+            } else {
+                i--;
+            }
+        }
     }
 
     public int getHeight() {
@@ -68,11 +80,15 @@ public class MapData {
         return mapTypes[y][x];
     }
 
-    public ImageView getMapImageView(int x, int y) {
+    public ImageView getMapItemImageView(int x, int y) {
         if (x < 0 || width <= x || y < 0 || height <= y) {
             return null;
         }
-        return mapImageViews[y][x];
+        if (itemTypes[y][x] == MapData.ITEM_TYPE_NULL) {
+            return new ImageView(mapImages[mapTypes[y][x]]);
+        } else {
+            return new ImageView(itemImages[itemTypes[y][x]]);
+        }
     }
 
     public void setMapType(int x, int y, int mapType) {
@@ -94,17 +110,6 @@ public class MapData {
             return;
         }
         itemTypes[y][x] = itemType;
-    }
-
-    public void setMapImageViews() {
-        for (int y = 0; y < height; y++) {
-            for (int x = 0; x < width; x++) {
-                mapImageViews[y][x] = new ImageView(mapImages[mapTypes[y][x]]);
-                if (itemTypes[y][x] != MapData.ITEM_TYPE_NULL) {
-                    mapImageViews[y][x] = new ImageView(itemImages[itemTypes[y][x]]);
-                }
-            }
-        }
     }
 
     public ImageView getItemImageView(int itemType) {
@@ -129,19 +134,19 @@ public class MapData {
 
     public void digMap(int x, int y) {
         setMapType(x, y, MAP_TYPE_SPACE);
-        int[][] vectors = { { 0, 1 }, { 0, -1 }, { -1, 0 }, { 1, 0 } };
         int[] temp;
+        int[][] tempVectors = { { 1, 0 }, { -1, 0 }, { 0, 1 }, { 0, -1 } };
 
-        for (int i = 0; i < vectors.length; i++) {
-            int j = (int) (Math.random() * vectors.length);
-            temp = vectors[i];
-            vectors[i] = vectors[j];
-            vectors[j] = temp;
+        for (int i = 0; i < tempVectors.length; i++) {
+            int j = (int) (Math.random() * tempVectors.length);
+            temp = tempVectors[i];
+            tempVectors[i] = tempVectors[j];
+            tempVectors[j] = temp;
         }
 
-        for (int i = 0; i < vectors.length; i++) {
-            int dx = vectors[i][0];
-            int dy = vectors[i][1];
+        for (int i = 0; i < tempVectors.length; i++) {
+            int dx = tempVectors[i][0];
+            int dy = tempVectors[i][1];
             if (getMapType(x + dx * 2, y + dy * 2) == MAP_TYPE_WALL) {
                 setMapType(x + dx, y + dy, MAP_TYPE_SPACE);
                 digMap(x + dx * 2, y + dy * 2);

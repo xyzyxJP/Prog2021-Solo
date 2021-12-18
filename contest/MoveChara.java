@@ -7,12 +7,13 @@ import java.util.ArrayList;
 import javafx.animation.AnimationTimer;
 
 public class MoveChara {
-    public static final int TYPE_DOWN = 0;
-    public static final int TYPE_LEFT = 1;
-    public static final int TYPE_RIGHT = 2;
-    public static final int TYPE_UP = 3;
+    public static final int[][] VECTORS = { { -1, 0 }, { 1, 0 }, { 0, -1 }, { 0, 1 } };
+    public static final int TYPE_UP = 0;
+    public static final int TYPE_DOWN = 1;
+    public static final int TYPE_LEFT = 2;
+    public static final int TYPE_RIGHT = 3;
 
-    private final String[] directions = { "Down", "Left", "Right", "Up" };
+    private final String[] directions = { "Up", "Down", "Left", "Right" };
     private final String[] animationNumbers = { "1", "2", "3" };
     private final String imagePathCat = "png/cat";
     private final String imagePathExt = ".png";
@@ -63,19 +64,19 @@ public class MoveChara {
         }
     }
 
-    public boolean canMove(int dx, int dy) {
-        if (mapData.getMapType(positionX + dx, positionY + dy) == MapData.MAP_TYPE_WALL) {
-            return false;
-        } else if (mapData.getMapType(positionX + dx, positionY + dy) == MapData.MAP_TYPE_SPACE) {
+    public boolean canMove(int charaDirection) {
+        System.out.println(charaDirection);
+        if (mapData.getMapType(positionX + VECTORS[charaDirection][1],
+                positionY + VECTORS[charaDirection][0]) == MapData.MAP_TYPE_SPACE) {
             return true;
         }
         return false;
     }
 
-    public boolean move(int dx, int dy) {
-        if (canMove(dx, dy)) {
-            positionX += dx;
-            positionY += dy;
+    public boolean move(int charaDirection) {
+        if (canMove(charaDirection)) {
+            positionX += VECTORS[charaDirection][1];
+            positionY += VECTORS[charaDirection][0];
             return true;
         } else {
             return false;
@@ -100,6 +101,23 @@ public class MoveChara {
 
     public ArrayList<Integer> getItemInventory() {
         return itemInventory;
+    }
+
+    public boolean useItem(int itemType) {
+        System.out.println(charaDirection);
+        if (!itemInventory.contains(itemType)) {
+            return false;
+        }
+        switch (itemType) {
+            case MapData.ITEM_TYPE_BOMB:
+                if (!canMove(charaDirection)) {
+                    itemInventory.remove(itemInventory.indexOf(itemType));
+                    mapData.setMapType(positionX + VECTORS[charaDirection][1],
+                            positionY + VECTORS[charaDirection][0], MapData.MAP_TYPE_SPACE);
+                    return true;
+                }
+        }
+        return false;
     }
 
     private class ImageAnimation extends AnimationTimer {
