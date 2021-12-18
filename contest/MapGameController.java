@@ -15,51 +15,57 @@ import javafx.scene.Group;
 import javafx.scene.layout.Pane;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import java.util.ArrayList;
 
 public class MapGameController implements Initializable {
     public MapData mapData;
     public MoveChara moveChara;
     public GridPane mapGridPane;
-    public ImageView[] mapImageViews;
+    public GridPane itemGridPane;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         mapData = new MapData(21, 15);
         moveChara = new MoveChara(1, 1, mapData);
-        mapImageViews = new ImageView[mapData.getHeight() * mapData.getWidth()];
-        for (int y = 0; y < mapData.getHeight(); y++) {
-            for (int x = 0; x < mapData.getWidth(); x++) {
-                int index = y * mapData.getWidth() + x;
-                mapImageViews[index] = mapData.getMapImageView(x, y);
-                if (mapData.getItemType(x, y) != MapData.ITEM_TYPE_NULL) {
-                    mapImageViews[index] = mapData.getItemImageView(x, y);
-                }
-            }
-        }
         drawMap(moveChara, mapData);
     }
 
     public void drawMap(MoveChara moveChara, MapData mapData) {
         int moveCharaPositionX = moveChara.getPositionX();
         int moveCharaPositionY = moveChara.getPositionY();
+        int itemType = mapData.getItemType(moveCharaPositionX, moveCharaPositionY);
+        switch (itemType) {
+            case MapData.ITEM_TYPE_GOAL:
+                printAction("CLEAR");
+                Alert alert = new Alert(AlertType.INFORMATION);
+                alert.setHeaderText(null);
+                alert.setContentText("Clear!");
+                alert.showAndWait();
+                remapButtonAction();
+                break;
+            case default:
+                if (itemType != MapData.ITEM_TYPE_NULL) {
+                    printAction("GET");
+                    moveChara.addItem(itemType);
+                    mapData.setItemType(moveCharaPositionX, moveCharaPositionY, MapData.ITEM_TYPE_NULL);
+                }
+                break;
+        }
+        mapData.setMapImageViews();
         mapGridPane.getChildren().clear();
         for (int y = 0; y < mapData.getHeight(); y++) {
             for (int x = 0; x < mapData.getWidth(); x++) {
-                int index = y * mapData.getWidth() + x;
                 if (x == moveCharaPositionX && y == moveCharaPositionY) {
                     mapGridPane.add(moveChara.getCharaImageView(), x, y);
                 } else {
-                    mapGridPane.add(mapImageViews[index], x, y);
+                    mapGridPane.add(mapData.getMapImageView(x, y), x, y);
                 }
             }
         }
-        if (moveChara.isGoal()) {
-            printAction("CLEAR");
-            Alert alert = new Alert(AlertType.INFORMATION);
-            alert.setHeaderText(null);
-            alert.setContentText("Clear!");
-            alert.showAndWait();
-            remapButtonAction();
+        itemGridPane.getChildren().clear();
+        ArrayList<Integer> itemInventory = moveChara.getItemInventory();
+        for (int i = 0; i < itemInventory.size(); i++) {
+            itemGridPane.add(mapData.getItemImageView(itemInventory.get(i)), i, 0);
         }
     }
 

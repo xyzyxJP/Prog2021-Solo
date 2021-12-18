@@ -1,6 +1,9 @@
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Rectangle;
+
+import java.util.ArrayList;
+
 import javafx.animation.AnimationTimer;
 
 public class MoveChara {
@@ -16,6 +19,8 @@ public class MoveChara {
 
     private int positionX;
     private int positionY;
+
+    private ArrayList<Integer> itemInventory = new ArrayList<Integer>();
 
     private MapData mapData;
 
@@ -89,8 +94,12 @@ public class MoveChara {
         return positionY;
     }
 
-    public boolean isGoal() {
-        return (mapData.getItemType(positionX, positionY) == MapData.ITEM_TYPE_GOAL);
+    public void addItem(int itemType) {
+        itemInventory.add(itemType);
+    }
+
+    public ArrayList<Integer> getItemInventory() {
+        return itemInventory;
     }
 
     private class ImageAnimation extends AnimationTimer {

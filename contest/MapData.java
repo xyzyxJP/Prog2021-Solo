@@ -12,15 +12,16 @@ public class MapData {
 
     public static final int ITEM_TYPE_NULL = -1;
     public static final int ITEM_TYPE_GOAL = 0;
+    public static final int ITEM_TYPE_BOMB = 1;
     private static final String itemImagePaths[] = {
-            "png/GOAL.png"
+            "png/GOAL.png",
+            "png/BOMB.png"
     };
 
     private Image[] mapImages;
     private ImageView[][] mapImageViews;
     private int[][] mapTypes;
     private Image[] itemImages;
-    private ImageView[][] itemImageViews;
     private int[][] itemTypes;
     private int width;
     private int height;
@@ -37,7 +38,6 @@ public class MapData {
         mapTypes = new int[y][x];
 
         itemImages = new Image[itemImagePaths.length];
-        itemImageViews = new ImageView[y][x];
         for (int i = 0; i < itemImagePaths.length; i++) {
             itemImages[i] = new Image(itemImagePaths[i]);
         }
@@ -48,9 +48,9 @@ public class MapData {
 
         fillItemType(ITEM_TYPE_NULL);
         setItemType(x - 2, y - 2, ITEM_TYPE_GOAL);
+        setItemType(2, 1, ITEM_TYPE_BOMB);
 
-        setMapImageView();
-        setItemImageView();
+        setMapImageViews();
     }
 
     public int getHeight() {
@@ -89,13 +89,6 @@ public class MapData {
         return itemTypes[y][x];
     }
 
-    public ImageView getItemImageView(int x, int y) {
-        if (x < 0 || width <= x || y < 0 || height <= y) {
-            return null;
-        }
-        return itemImageViews[y][x];
-    }
-
     public void setItemType(int x, int y, int itemType) {
         if (x < 1 || width <= x - 1 || y < 1 || height <= y - 1) {
             return;
@@ -103,22 +96,19 @@ public class MapData {
         itemTypes[y][x] = itemType;
     }
 
-    public void setMapImageView() {
+    public void setMapImageViews() {
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 mapImageViews[y][x] = new ImageView(mapImages[mapTypes[y][x]]);
+                if (itemTypes[y][x] != MapData.ITEM_TYPE_NULL) {
+                    mapImageViews[y][x] = new ImageView(itemImages[itemTypes[y][x]]);
+                }
             }
         }
     }
 
-    public void setItemImageView() {
-        for (int y = 0; y < height; y++) {
-            for (int x = 0; x < width; x++) {
-                if (itemTypes[y][x] != ITEM_TYPE_NULL) {
-                    itemImageViews[y][x] = new ImageView(itemImages[itemTypes[y][x]]);
-                }
-            }
-        }
+    public ImageView getItemImageView(int itemType) {
+        return new ImageView(itemImages[itemType]);
     }
 
     public void fillMapType(int mapType) {
