@@ -100,7 +100,7 @@
 
 #### 必須機能
 
-[https://github.com/xyzyxJP/Prog2021-04/issues](https://github.com/xyzyxJP/Prog2021-04/issues)
+[https://github.com/xyzyxJP/Prog2021-04/issues](https://github.com/xyzyxJP/Prog2021-Solo/issues)
 
 #### ひな型の実行方法
 
