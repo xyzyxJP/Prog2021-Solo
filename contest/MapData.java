@@ -1,5 +1,9 @@
+import javafx.animation.Timeline;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+
+import java.time.Duration;
+import java.util.Date;
 
 public class MapData {
     public static final int MAP_TYPE_SPACE = 0;
@@ -24,12 +28,17 @@ public class MapData {
             "image/portal.png"
     };
 
+    public static final long RESET_TIME_LIMIT = 35;
+    public static long TIME_LIMIT = 35;
+
     private Image[] mapImages;
     private Image[] itemImages;
     private int[][] mapTypes;
     private int[][] itemTypes;
     private int width;
     private int height;
+
+    private Date startDate;
 
     MapData(int x, int y) {
         width = x;
@@ -56,6 +65,10 @@ public class MapData {
         SetItemTypeRandom(1, ITEM_TYPE_KEY);
         SetItemTypeRandom(3, ITEM_TYPE_COIN);
         SetItemTypeRandom(2, ITEM_TYPE_PORTAL);
+
+        TIME_LIMIT -= 5;
+
+        startDate = new Date();
     }
 
     private void SetItemTypeRandom(int itemCount, int itemType) {
@@ -77,6 +90,14 @@ public class MapData {
 
     public int GetWidth() {
         return width;
+    }
+
+    public long GetPlaySeconds() {
+        return ((new Date().getTime()) - startDate.getTime()) / 1000;
+    }
+
+    public void ResetTimeLimit() {
+        TIME_LIMIT = RESET_TIME_LIMIT;
     }
 
     public boolean CheckXY(int x, int y) {

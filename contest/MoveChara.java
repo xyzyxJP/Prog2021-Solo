@@ -144,6 +144,10 @@ public class MoveChara {
         MoveChara.score += score;
     }
 
+    public void ResetScore() {
+        MoveChara.score = 0;
+    }
+
     private class ImageAnimation extends AnimationTimer {
         private ImageView charaView = null;
         private Image[] charaImages = null;

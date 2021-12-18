@@ -1,7 +1,10 @@
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.Timer;
+import java.util.TimerTask;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -19,11 +22,28 @@ public class MapGameController implements Initializable {
     public Label scoreLabel;
     public Label timeLabel;
 
+    public Timer timer;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         mapData = new MapData(21, 15);
         moveChara = new MoveChara(1, 1, mapData);
         DrawMap(moveChara, mapData);
+        timer = new Timer();
+        timer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                Platform.runLater(() -> {
+                    long remainingTime = MapData.TIME_LIMIT - mapData.GetPlaySeconds();
+                    timeLabel.setText(String.valueOf(remainingTime));
+                    if (remainingTime <= 0) {
+                        timer.cancel();
+                        OverButtonAction();
+                        return;
+                    }
+                });
+            }
+        }, 0, 500);
     }
 
     public void DrawMap(MoveChara moveChara, MapData mapData) {
@@ -147,6 +167,17 @@ public class MapGameController implements Initializable {
         printAction("BOMB");
         moveChara.UseItem(MapData.ITEM_TYPE_BOMB);
         DrawMap(moveChara, mapData);
+    }
+
+    public void OverButtonAction() {
+        printAction("OVER");
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setHeaderText(null);
+        alert.setContentText("Game Over!\n" + "Score : " + String.valueOf(moveChara.GetScore()));
+        alert.showAndWait();
+        moveChara.ResetScore();
+        mapData.ResetTimeLimit();
+        RemapButtonAction();
     }
 
     public void func2ButtonAction(ActionEvent event) {
