@@ -189,10 +189,6 @@ public class MapGameController implements Initializable {
         RemapButtonAction();
     }
 
-    public void func2ButtonAction(ActionEvent event) {
-        System.out.println("func2: Nothing to do");
-    }
-
     public void func3ButtonAction(ActionEvent event) {
         System.out.println("func3: Nothing to do");
     }
