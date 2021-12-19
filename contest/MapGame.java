@@ -1,5 +1,3 @@
-import java.io.File;
-
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
