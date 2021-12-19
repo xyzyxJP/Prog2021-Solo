@@ -58,7 +58,7 @@ public class MapGameController implements Initializable {
                 printAction("PORTAL");
                 moveChara.Portal();
                 break;
-            case default:
+            default:
                 if (itemType != MapData.ITEM_TYPE_NULL && itemType != MapData.ITEM_TYPE_GOAL) {
                     printAction("GET");
                     moveChara.AddItem(itemType);
