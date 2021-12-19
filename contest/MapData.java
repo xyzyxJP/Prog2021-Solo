@@ -18,13 +18,15 @@ public class MapData {
     public static final int ITEM_TYPE_COIN = 3;
     public static final int ITEM_TYPE_PORTAL = 4;
     public static final int ITEM_TYPE_TIME = 5;
+    public static final int ITEM_TYPE_HACK = 6;
     private static final String itemImagePaths[] = {
             "image/goal.png",
             "image/bomb.png",
             "image/key.png",
             "image/coin.png",
             "image/portal.png",
-            "image/time.png"
+            "image/time.png",
+            "image/hack.png"
     };
 
     public static final long RESET_TIME_LIMIT = 35;
@@ -67,6 +69,7 @@ public class MapData {
         SetItemTypeRandom(3, ITEM_TYPE_COIN);
         SetItemTypeRandom(2, ITEM_TYPE_PORTAL);
         SetItemTypeRandom(3, ITEM_TYPE_TIME);
+        SetItemTypeRandom(2, ITEM_TYPE_HACK);
 
         TIME_LIMIT -= 5;
         startDate = new Date();

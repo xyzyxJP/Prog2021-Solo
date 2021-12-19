@@ -64,18 +64,22 @@ public class MoveChara {
         }
     }
 
-    public boolean CanMove(int charaDirection) {
-        if (mapData.GetMapType(positionX + VECTORS[charaDirection][1],
-                positionY + VECTORS[charaDirection][0]) == MapData.MAP_TYPE_SPACE) {
+    public boolean CanMove(int charaDirection, int distance) {
+        if (mapData.CheckXY(positionX + VECTORS[charaDirection][1] * distance,
+                positionY + VECTORS[charaDirection][0] * distance)) {
+            return false;
+        }
+        if (mapData.GetMapType(positionX + VECTORS[charaDirection][1] * distance,
+                positionY + VECTORS[charaDirection][0] * distance) == MapData.MAP_TYPE_SPACE) {
             return true;
         }
         return false;
     }
 
-    public boolean Move(int charaDirection) {
-        if (CanMove(charaDirection)) {
-            positionX += VECTORS[charaDirection][1];
-            positionY += VECTORS[charaDirection][0];
+    public boolean Move(int charaDirection, int distance) {
+        if (CanMove(charaDirection, distance)) {
+            positionX += VECTORS[charaDirection][1] * distance;
+            positionY += VECTORS[charaDirection][0] * distance;
             return true;
         } else {
             return false;
@@ -132,13 +136,22 @@ public class MoveChara {
         }
         switch (itemType) {
             case MapData.ITEM_TYPE_BOMB:
-                if (!CanMove(charaDirection)) {
+                if (!CanMove(charaDirection, 1)) {
                     itemInventory.remove(itemInventory.indexOf(itemType));
                     mapData.SetMapType(positionX + VECTORS[charaDirection][1],
                             positionY + VECTORS[charaDirection][0], MapData.MAP_TYPE_SPACE);
                     AddScore(100);
                     return true;
                 }
+                break;
+            case MapData.ITEM_TYPE_HACK:
+                if (!CanMove(charaDirection, 1) && CanMove(charaDirection, 2)) {
+                    itemInventory.remove(itemInventory.indexOf(itemType));
+                    Move(charaDirection, 2);
+                    AddScore(100);
+                    return true;
+                }
+                break;
         }
         return false;
     }

@@ -103,24 +103,23 @@ public class MapGameController implements Initializable {
         KeyCode keyCode = keyEvent.getCode();
         System.out.println("KeyCode:" + keyCode);
         switch (keyCode) {
-            case H:
             case A:
                 LeftButtonAction();
                 break;
-            case J:
             case S:
                 DownButtonAction();
                 break;
-            case K:
             case W:
                 UpButtonAction();
                 break;
-            case L:
             case D:
                 RightButtonAction();
                 break;
             case B:
                 BombButtonAction(null);
+                break;
+            case H:
+                HackButtonAction(null);
                 break;
             case R:
             case DELETE:
@@ -137,28 +136,28 @@ public class MapGameController implements Initializable {
     public void UpButtonAction() {
         printAction("UP");
         moveChara.SetCharaDirection(MoveChara.TYPE_UP);
-        moveChara.Move(MoveChara.TYPE_UP);
+        moveChara.Move(MoveChara.TYPE_UP, 1);
         DrawMap(moveChara, mapData);
     }
 
     public void DownButtonAction() {
         printAction("DOWN");
         moveChara.SetCharaDirection(MoveChara.TYPE_DOWN);
-        moveChara.Move(MoveChara.TYPE_DOWN);
+        moveChara.Move(MoveChara.TYPE_DOWN, 1);
         DrawMap(moveChara, mapData);
     }
 
     public void LeftButtonAction() {
         printAction("LEFT");
         moveChara.SetCharaDirection(MoveChara.TYPE_LEFT);
-        moveChara.Move(MoveChara.TYPE_LEFT);
+        moveChara.Move(MoveChara.TYPE_LEFT, 1);
         DrawMap(moveChara, mapData);
     }
 
     public void RightButtonAction() {
         printAction("RIGHT");
         moveChara.SetCharaDirection(MoveChara.TYPE_RIGHT);
-        moveChara.Move(MoveChara.TYPE_RIGHT);
+        moveChara.Move(MoveChara.TYPE_RIGHT, 1);
         DrawMap(moveChara, mapData);
     }
 
@@ -167,9 +166,15 @@ public class MapGameController implements Initializable {
         initialize(null, null);
     }
 
-    public void BombButtonAction(ActionEvent event) {
+    public void BombButtonAction(ActionEvent actionEvent) {
         printAction("BOMB");
         moveChara.UseItem(MapData.ITEM_TYPE_BOMB);
+        DrawMap(moveChara, mapData);
+    }
+
+    public void HackButtonAction(ActionEvent actionEvent) {
+        printAction("HACK");
+        moveChara.UseItem(MapData.ITEM_TYPE_HACK);
         DrawMap(moveChara, mapData);
     }
 
