@@ -1,6 +1,7 @@
+import java.util.Date;
+
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import java.util.Date;
 
 public class MapData {
     public static final int MAP_TYPE_SPACE = 0;
