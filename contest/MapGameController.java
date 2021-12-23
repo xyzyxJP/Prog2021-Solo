@@ -28,6 +28,7 @@ public class MapGameController implements Initializable {
     public AudioClip portalAudioClip;
     public AudioClip bombAudioClip;
     public AudioClip hackAudioClip;
+    public AudioClip clearAudioClip;
     public Timer timer;
 
     @Override
@@ -62,6 +63,11 @@ public class MapGameController implements Initializable {
             hackAudioClip = new AudioClip(getClass().getResource("audio/hack.mp3").toExternalForm());
             hackAudioClip.setCycleCount(1);
             hackAudioClip.setVolume(0.05);
+        }
+        if (clearAudioClip == null) {
+            clearAudioClip = new AudioClip(getClass().getResource("audio/clear.mp3").toExternalForm());
+            clearAudioClip.setCycleCount(1);
+            clearAudioClip.setVolume(0.05);
         }
         mapData = new MapData(21, 15);
         moveChara = new MoveChara(1, 1, mapData);
@@ -132,6 +138,7 @@ public class MapGameController implements Initializable {
         if (itemType == MapData.ITEM_TYPE_GOAL) {
             if (moveChara.GetItemInventory().contains(MapData.ITEM_TYPE_KEY)) {
                 printAction("CLEAR");
+                clearAudioClip.play();
                 Alert alert = new Alert(AlertType.INFORMATION);
                 alert.setHeaderText(null);
                 alert.setContentText("Clear!");
