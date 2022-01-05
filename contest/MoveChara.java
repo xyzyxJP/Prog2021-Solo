@@ -63,7 +63,7 @@ public class MoveChara {
     /**
      * キャラクターの向きを変更する
      * 
-     * @param charaDirection CharaDirection
+     * @param charaDirection キャラクターの向き
      */
     public void SetCharaDirection(int charaDirection) {
         this.charaDirection = charaDirection;
@@ -79,9 +79,9 @@ public class MoveChara {
     /**
      * 指定方向に移動できるかを返す
      * 
-     * @param charaDirection キャラクターの方向
+     * @param charaDirection キャラクターの向き
      * @param distance       キャラクターからの距離
-     * @return
+     * @return 移動できるか
      */
     public boolean CanMove(int charaDirection, int distance) {
         if (mapData.CheckXY(positionX + VECTORS[charaDirection][1] * distance,
@@ -98,9 +98,9 @@ public class MoveChara {
     /**
      * 指定方向に移動する
      * 
-     * @param charaDirection キャラクターの方向
+     * @param charaDirection キャラクターの向き
      * @param distance       キャラクターからの距離
-     * @return
+     * @return 移動できたか
      */
     public boolean Move(int charaDirection, int distance) {
         if (CanMove(charaDirection, distance)) {
@@ -130,7 +130,7 @@ public class MoveChara {
     /**
      * キャラクターのImageViewを返す
      * 
-     * @return
+     * @return ImageView
      */
     public ImageView GetCharaImageView() {
         return charaImageViews[charaDirection];
@@ -139,7 +139,7 @@ public class MoveChara {
     /**
      * キャラクターのX座標を返す
      * 
-     * @return
+     * @return X座標
      */
     public int GetPositionX() {
         return positionX;
@@ -148,7 +148,7 @@ public class MoveChara {
     /**
      * キャラクターのY座標を返す
      * 
-     * @return
+     * @return Y座標
      */
     public int GetPositionY() {
         return positionY;
@@ -178,7 +178,7 @@ public class MoveChara {
     /**
      * キャラクターのイベントリ一覧を返す
      * 
-     * @return
+     * @return インベントリ一覧
      */
     public ArrayList<Integer> GetItemInventory() {
         return itemInventory;
@@ -188,7 +188,7 @@ public class MoveChara {
      * キャラクターのアイテムを使用する
      * 
      * @param itemType ItemType
-     * @return
+     * @return 使用できたか
      */
     public boolean UseItem(int itemType) {
         if (!itemInventory.contains(itemType)) {
@@ -219,7 +219,7 @@ public class MoveChara {
     /**
      * キャラクターのスコアを返す
      * 
-     * @return
+     * @return スコア
      */
     public int GetScore() {
         return score;
@@ -228,7 +228,7 @@ public class MoveChara {
     /**
      * キャラクターのスコアを追加する
      * 
-     * @param score Score
+     * @param score スコア
      */
     public void AddScore(int score) {
         MoveChara.score += score;

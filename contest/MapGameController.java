@@ -242,6 +242,11 @@ public class MapGameController implements Initializable {
         initialize(null, null);
     }
 
+    /**
+     * 爆弾を使用する
+     * 
+     * @param actionEvent ActionEvent
+     */
     public void BombButtonAction(ActionEvent actionEvent) {
         PrintAction("BOMB");
         if (moveChara.UseItem(MapData.ITEM_TYPE_BOMB)) {
@@ -250,6 +255,11 @@ public class MapGameController implements Initializable {
         DrawMap(moveChara, mapData);
     }
 
+    /**
+     * 一方通行を使用する
+     * 
+     * @param actionEvent ActionEvent
+     */
     public void HackButtonAction(ActionEvent actionEvent) {
         PrintAction("HACK");
         if (moveChara.UseItem(MapData.ITEM_TYPE_HACK)) {
